@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Abilities from '../abilities/Abilities';
+import Skills from '../skills/Skills';
 import styled from 'styled-components';
 
 const Self = styled.div`
@@ -16,25 +18,11 @@ const Common = styled.div`
 const Physical = styled.div`
   display: block;
 `
-const Stats = styled.div`
-  display: flex;
-  justify-content: space-between;
-`
-const Ability = styled.div`
-`
 const Mental = styled.div`
 `
 const Label = styled.span`
   font-weight: bold;
   font-style: italic;
-`
-const Traits = styled.div`
-`
-const Trait = styled.div`
-`
-const Actions = styled.div`
-`
-const Action = styled.div`
 `
 
 export class Creature extends Component {
@@ -51,6 +39,19 @@ export class Creature extends Component {
     const creature = this.props.creature;
     const describe = [translateSize(creature.size), creature.type, creature.alignment].join(', ');
     const stats = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+    const statsMap = stats.reduce(
+      (acc, stat) => {
+        return {...acc, [stat]: creature[stat]}
+      }
+      , {}
+    );
+    const skills = ['save', 'skill', 'passive', 'senses', 'languages', 'cr'];
+    const skillsMap = skills.reduce(
+      (acc, item) => {
+        return {...acc, [item]: creature[item]}
+      }
+      , {}
+    );
     const traits = creature.trait ? [...creature.trait] : [];
     const actions = creature.action ? [...creature.action] : [];
 
@@ -65,55 +66,28 @@ export class Creature extends Component {
           <p>HP: {creature.hp}</p>
           <p>Скорость: {creature.speed}</p>
         </Physical>
-        <Stats>
-          {stats.map(stat => {
-            let statValue = creature[stat];
-            return (
-              <Ability>
-                {stat.toUpperCase()} {statValue} ({getAbilityModificator(statValue)})
-              </Ability>
-            )
-          })}
-        </Stats>
-        <Mental>
-          <div>
-            <Label>Способность: </Label>
-            {creature.skill}
-          </div>
-          <div>
-            <Label>Пассивное восприятие: </Label>
-            {creature.passive}
-          </div>
-          <div>
-            <Label>Язык: </Label>
-            {creature.languages}
-          </div>
-          <div>
-            <Label>Сложность: </Label>
-            {creature.cr} ({getChallengeRateXp(creature.cr)} XP)
-          </div>
-        </Mental>
-        <Traits>
+        <Abilities statsMap={statsMap} />
+        <Skills skillsMap={skillsMap} />
+        <div>
           {traits.map(trait => {
             return (
-              <Trait>
+              <div>
                 <Label>{trait.name} </Label>
                 {trait.text}
-              </Trait>
+              </div>
             )
           })}
-        </Traits>
-        <Actions>
+        </div>
+        <div>
           {actions.map(action => {
             return (
-              <Action>
+              <div>
                 <Label>{action.name} </Label>
                 {action.text}
-              </Action>
+              </div>
             )
           })}
-          <Action></Action>
-        </Actions>
+        </div>
       </Self>
     );
   }
@@ -131,82 +105,4 @@ function translateSize(key) {
   }
 
   return size[key];
-}
-
-function getAbilityModificator(val) {
-  const mods = {
-    1: "-5",
-    2: "-4",
-    3: "-4",
-    4: "-3",
-    5: "-3",
-    6: "-2",
-    7: "-2",
-    8: "-1",
-    9: "-1",
-    10: "+0",
-    11: "+0",
-    12: "+1",
-    13: "+1",
-    14: "+2",
-    15: "+2",
-    16: "+3",
-    17: "+3",
-    18: "+4",
-    19: "+4",
-    20: "+5",
-    21: "+5",
-    22: "+6",
-    23: "+6",
-    24: "+7",
-    25: "+7",
-    26: "+8",
-    27: "+8",
-    28: "+9",
-    29: "+9",
-    30: "+10",
-  }
-
-  return mods[val];
-}
-
-function getChallengeRateXp(rate) {
-  const rating = {
-    "0": "0 or 10",
-    "1/8": "25",
-    "1/4": "50",
-    "1/2": "100",
-    "1": "200",
-    "2": "450",
-    "3": "700",
-    "4": "1,100",
-    "5": "1,800",
-    "6": "2,300",
-    "7": "2,900",
-    "8": "3,900",
-    "9": "5,000",
-    "10": "5,900",
-    "11": "7,200",
-    "12": "8,400",
-    "13": "10,000",
-    "14": "11,500",
-    "15": "13,000",
-    "16": "15,000",
-    "17": "18,000",
-    "18": "20,000",
-    "19": "22,000",
-    "20": "25,000",
-    "21": "33,000",
-    "22": "41,000",
-    "23": "50,000",
-    "24": "62,000",
-    "25": "75,000",
-    "26": "90,000",
-    "27": "105,000",
-    "28": "120,000",
-    "29": "135,000",
-    "30": "155,000"
-  }
-
-  return rating[rate];
 }
