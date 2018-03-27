@@ -25,7 +25,7 @@ const Label = styled.span`
   font-style: italic;
 `
 
-export class Creature extends Component {
+class Creature extends Component {
   constructor(props) {
     super(props);
 
@@ -106,3 +106,5 @@ function translateSize(key) {
 
   return size[key];
 }
+
+export default Creature;

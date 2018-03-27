@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import getAbilityModificator from './helpers';
 
-export default class Abilities extends Component {
+class Abilities extends Component {
   constructor(props) {
     super(props);
   }
@@ -49,3 +49,5 @@ class Ability extends Component {
     )
   }
 }
+
+export default Abilities;

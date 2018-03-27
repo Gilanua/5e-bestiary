@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { getChallengeRateXp, getSkillName } from './helpers';
 
 
-export default class Skills extends Component {
+class Skills extends Component {
   constructor(props) {
     super(props);
   }
@@ -50,3 +50,5 @@ class Skill extends Component {
     )
   }
 }
+
+export default Skills;
