@@ -35,13 +35,16 @@ class Ability extends Component {
   render() {
     const Self = styled.div`
       text-align: center;
-    `
+    `;
+    const Named = styled.div`
+      font-weight: bolder;
+    `;
 
     return (
       <Self>
-        <div>
+        <Named>
           {this.props.name.toUpperCase()}
-        </div>
+        </Named>
         <div>
           {this.props.value} ({getAbilityModificator(this.props.value)})
         </div>

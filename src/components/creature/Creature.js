@@ -6,8 +6,8 @@ import styled from 'styled-components';
 const Self = styled.div`
   display: block;
   width: 700px;
-  background: black;
-  color: white;
+  background: antiquewhite;
+  color: salmon;
   border: 1px solid gold;
   padding: 2em 2.5em;
   margin: 2em auto;
@@ -58,7 +58,7 @@ class Creature extends Component {
     return (
       <Self>
         <Common>
-          <p>{creature.name}</p>
+          <h2>{creature.name}</h2>
           <p>{describe}</p>
         </Common>
         <Physical>
@@ -71,7 +71,7 @@ class Creature extends Component {
         <div>
           {traits.map(trait => {
             return (
-              <div>
+              <div style={{marginBottom: 1 + 'em'}}>
                 <Label>{trait.name} </Label>
                 {trait.text}
               </div>
@@ -81,7 +81,7 @@ class Creature extends Component {
         <div>
           {actions.map(action => {
             return (
-              <div>
+              <div style={{marginBottom: 1 + 'em'}}>
                 <Label>{action.name} </Label>
                 {action.text}
               </div>
